@@ -1,10 +1,12 @@
-
+#https://www.acmicpc.net/problem/7569
+#토마토
+#7569
 
 from collections import deque
 import sys
 input = sys.stdin.readline
 
-
+#m = 가로칸, n =세로칸, h = 높이
 m, n, h = map(int, input().split())
 
 graph = []
@@ -43,13 +45,15 @@ def bfs(n, m, h): #h가 첫번째, n이 두번째, m이 세번째
                 que.append([na, nb, nc])
 
     result = 0
-    
+
     for i in range(h):
         for j in range(n):
             for k in range(m):
                 #만약 그래프에 아직도 0이 남아있다면 전부 다 익지 않았다는 의미!
                 if graph[i][j][k] == 0:
                     return -1
+                #그 외의 경우들은 일수들이 적혀있는거니깐, 아니면 -1인 장애물이 있을테니
+                #맥스값을 출력하면 내가 원하는 다 찼을때의 최대 일수를 구할수 있움
                 result = max(result, graph[i][j][k])
 
     ans = result - 1 #문제 설정에서 처음 1은 0일차이기에, 일수를 구하기 위해서는 1을 빼줘야 한다.
