@@ -32,31 +32,33 @@ def bfs(n, c):
     D = []
     S_que = deque() #고슴도치
     W_que = deque() #물
+
     for i in range(n):
         for j in range(c):
+
             if graph[i][j] == 'S':
                 S_que.append([graph[i][j]])
+
             if graph[i][j] == '*':
                 W_que.append([graph[i][j]])
+
             if graph[i][j] == 'D':
                 D = [i,j]
 
     while S_que:
 
-        while W_que:
-            a, b = W_que.popleft()
-            
-            for i in range(4):
-                na = a + da[i]
-                nb = b + db[i]
+        a, b = W_que.popleft()
+        
+        for i in range(4):
+            na = a + da[i]
+            nb = b + db[i]
 
-            if na<0 or na>= n or nb<0 or nb>= c:
-                continue
+        if na<0 or na>= n or nb<0 or nb>= c:
+            continue
 
-            if graph[na][nb] == '.':
-                W_que.append([na,nb])
-                graph[na][nb] = 'X'
-
+        if graph[na][nb] == '.':
+            W_que.append([na,nb])
+            graph[na][nb] = 'X'
 
         x, y = S_que.popleft()
 

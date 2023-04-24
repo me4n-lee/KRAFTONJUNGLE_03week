@@ -1,48 +1,40 @@
-from collections import deque
+import heapq
+import sys
+input = sys.stdin.readline
 
-m, n, h = map(int, input().split())
+n = int(input())
+m = int(input())
 
-graph = []
+graph = [[] for _ in range(n+1)]
+for _ in range(m):
+    first, last, cost = map(int, input().split())
+    graph[first].append((cost, last))
 
-for _ in range(h):
-    graph_sub = []
-    for i in range(n):
-        a = list(map(int, input().split()))
-        graph_sub.append(a)
-    graph.append(graph_sub)
+start, end = map(int, input().split())
 
-dx = [1, -1, 0, 0, 0, 0]
-dy = [0, 0, 1, -1, 0, 0]
-dz = [0, 0, 0, 0, 1, -1]
+print(graph)
 
-def bfs(h, n, m):
-    que = deque()
-    for i in range(h):
-        for j in range(n):
-            for k in range(m):
-                if graph[i][j][k] == 1:
-                    que.append([i, j, k])
+inf = sys.maxsize
+visit = [inf] * (n+1)
 
-    while que:
-        z, x, y = que.popleft()
+def dijkstra(start):
+    heap = []
+    heapq.heappush(heap, (0, start))
+    visit[start] = 0
 
-        for i in range(6):
-            nz = z + dz[i]
-            nx = x + dx[i]
-            ny = y + dy[i]
+    while heap:
+        cost, city = heapq.heappop(heap)
 
-            if 0 <= nx < n and 0 <= ny < m and 0 <= nz < h and graph[nz][nx][ny] == 0:
-                graph[nz][nx][ny] = graph[z][x][y] + 1
-                que.append([nz, nx, ny])
+        if visit[city] < cost:
+            continue
 
-    result = -1
-    for i in range(h):
-        for j in range(n):
-            for k in range(m):
-                if graph[i][j][k] == 0:
-                    return -1
-                result = max(result, graph[i][j][k])
+        for value in graph[city]:
+            new_cost = cost + value[0]
 
-    return result - 1
+            if new_cost < visit[value[1]]:
+                visit[value[1]] = new_cost
+                heapq.heappush(heap, (new_cost, value[1]))
 
-print(bfs(h, n, m))
+dijkstra(start)
+
+print(visit[end])

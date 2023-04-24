@@ -16,7 +16,7 @@ for i in range(n):
 
 print(graph)
 
-visit = [0][0] * n*m
+visit = [[0] * m for _ in range(n)]
 
 print(visit)
 

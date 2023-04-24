@@ -65,3 +65,7 @@ def bfs(n, c):
     return "KAKTUS"
 
 print(bfs(n, c))
+
+#각 for 문은 현재 길이를 기준으로 돌기 떄문에, 처음엔 한번만 돈다.
+#또는 append가 된만큼만돈다.
+#

@@ -20,6 +20,7 @@ graph = sorted(list(set(graph)), reverse=True)
 
 def bfs(graph, start, k):
     
+    #visit 관련해서 초기화(중복여부에 대한 체크)
     visit = [0] * (k+1)
     que = deque()
     que.append(start)
