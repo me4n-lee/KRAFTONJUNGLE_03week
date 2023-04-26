@@ -14,20 +14,6 @@ for _ in range(n):
 
 print(tree)
 
-# sub_graph = []
-# for _ in range(n):
-#     a = list(map(str, input().split()))
-#     sub_graph.append(a)
-
-# print(sub_graph)
-
-# graph = []
-# for _ in range(n):
-#     a = list(input().split())
-#     graph.append(a)
-
-# print(graph)
-
 def LAB(root):
 
     if root != '.':
@@ -54,3 +40,17 @@ print()
 ALB('A')
 print()
 ABL('A')
+
+# sub_graph = []
+# for _ in range(n):
+#     a = list(map(str, input().split()))
+#     sub_graph.append(a)
+
+# print(sub_graph)
+
+# graph = []
+# for _ in range(n):
+#     a = list(input().split())
+#     graph.append(a)
+
+# print(graph)

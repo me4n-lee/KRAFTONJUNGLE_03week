@@ -1,3 +1,5 @@
+#kruskal_2
+
 import sys
 input = lambda: sys.stdin.readline().rstrip()
 
