@@ -1,46 +1,66 @@
-#https://www.acmicpc.net/problem/2665
-#미로만들기
-#2665
+#https://www.acmicpc.net/problem/1388
+#바닥 장식
+#1388
 
-import heapq
+from collections import deque
 import sys
 input = sys.stdin.readline
 
-n = int(input())
-m = int(input())
+n, m = map(int, input().split())
 
-graph = [[] for _ in range(n+1)]
-for _ in range(m):
-    first, last, cost = map(int, input().split())
-    # graph[first].append([last, cost])
-    graph[first].append((cost, last))
+graph = []
+for _ in range(n):
+    a = list(map(str, input().strip()))
+    graph.append(a)
 
-start, end = map(int, input().split())
+visit = [[0] * m for _ in range(n)]
+count = [[1] * m for _ in range(n)]
 
-# print(graph)
+dx = [1, -1, 0, 0]
+dy = [0, 0, 1, -1]
 
-inf = sys.maxsize
-visit = [inf] * (n+1)
+def dfs(a, b):
+    que = deque()
+    que.append((a,b))
+    visit[a][b] = 1
 
-def dijkstra(start):
-    stack = []
-    #튜플의 첫 번째 원소를 기준으로 최소 힙이 구성됩니다.
-    stack.append((0, start))
-    visit[start] = 0
+    while que:
+        x, y = que.popleft()
 
-    while stack:
-        cost, city = stack.pop()
+        for i in range(2):
+            nx = x + dx[i]
+            ny = y + dy[i]
 
-        if visit[city] < cost:
-            continue
+            if 0 <= nx < n and 0 <= ny < m and visit[nx][ny] == 0:
+                if graph[x][y] == '|':
+                    if graph[nx][ny] == '|':
+                        visit[nx][ny] = 1
+                        count[nx][ny] = 0
+                        que.append((nx, ny))
+                else:
+                    visit[nx][ny] = 1
+                    que.append((nx, ny))
 
-        for value in graph[city]:
-            new_cost = cost + value[0]
+        for i in range(2, 4):
+            nx = x + dx[i]
+            ny = y + dy[i]
 
-            if new_cost < visit[value[1]]:
-                visit[value[1]] = new_cost
-                stack.append((new_cost, value[1]))
+            if 0 <= nx < n and 0 <= ny < m and visit[nx][ny] == 0:
+                if graph[x][y] == '-':
+                    if graph[nx][ny] == '-':
+                        visit[nx][ny] = 1
+                        count[nx][ny] = 0
+                        que.append((nx, ny))
+                else:
+                    visit[nx][ny] = 1
+                    que.append((nx, ny))
 
-dijkstra(start)
 
-print(visit[end])
+    return
+
+dfs(0,0)
+
+print(visit)
+print(count)
+
+print(sum(sum(count)))

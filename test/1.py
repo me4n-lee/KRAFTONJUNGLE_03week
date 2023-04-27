@@ -2,6 +2,7 @@
 #바닥 장식
 #1388
 
+from collections import deque
 import sys
 input = sys.stdin.readline
 
@@ -13,21 +14,46 @@ for _ in range(n):
     graph.append(a)
 
 visit = [[0] * m for _ in range(n)]
+count = [[1] * m for _ in range(n)]
 
-def dfs(x, y):
-    visit[x][y] = 1
-    if graph[x][y] == '-':
-        if y + 1 < m and graph[x][y + 1] == '-' and visit[x][y + 1] == 0:
-            dfs(x, y + 1)
-    elif graph[x][y] == '|':
-        if x + 1 < n and graph[x + 1][y] == '|' and visit[x + 1][y] == 0:
-            dfs(x + 1, y)
+dx = [1, -1, 0, 0]
+dy = [0, 0, 1, -1]
 
-count = 0
+def bfs(a, b):
+    que = deque()
+    que.append((a,b))
+    visit[a][b] = 1
+
+    while que:
+        x, y = que.popleft()
+
+        for i in range(2):
+            nx = x + dx[i]
+            ny = y + dy[i]
+
+            if 0 <= nx < n and 0 <= ny < m and visit[nx][ny] == 0:
+                if graph[x][y] == '|':
+                    if graph[nx][ny] == '|':
+                        visit[nx][ny] = 1
+                        count[nx][ny] = 0
+                        que.append((nx, ny))
+
+        for i in range(2, 4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+
+            if 0 <= nx < n and 0 <= ny < m and visit[nx][ny] == 0:
+                if graph[x][y] == '-':
+                    if graph[nx][ny] == '-':
+                        visit[nx][ny] = 1
+                        count[nx][ny] = 0
+                        que.append((nx, ny))
+
+    return
+
 for i in range(n):
     for j in range(m):
         if visit[i][j] == 0:
-            count += 1
-            dfs(i, j)
+            bfs(i, j)
 
-print(count)
+print(sum(map(sum, count)))

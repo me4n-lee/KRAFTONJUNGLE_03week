@@ -52,8 +52,6 @@ def dfs(graph, visit):
 
     return value
 
-
-
 print(dfs(graph, visit))
 house.sort()
 for i in range(len(house)):

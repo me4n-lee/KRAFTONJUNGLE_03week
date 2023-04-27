@@ -7,7 +7,7 @@ input = sys.stdin.readline
 
 n, m = map(int, input().split())
 
-graph =[[] for _ in range(n)]
+graph =[]
 for _ in range(n):
     a = list(map(str, input().strip()))
     graph.append(a)
@@ -15,7 +15,7 @@ for _ in range(n):
 print(graph)
 
 visit = [[0] * m for _ in range(n)]
-count = [[] for _ in range(n)]
+count = [[0] for _ in range(n)]
 
 dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
@@ -39,19 +39,19 @@ def dfs(a,b):
             if 0 <= nx < n and 0 <= ny < m and visit[nx][ny] == 0:
 
                 if graph[x][y] == "-":
-                    if graph[x][ny] == "-":
-                        count[x][ny] = count[a][b]
-                        stack.append((x,ny))
+                    if graph[nx][ny] == "-":
+                        count[nx][ny] = 1
+                        stack.append((nx,ny))
                     else:
-                        count[nx][y] = count[a][b] + 1
-                        stack.append((nx,y))
-                elif graph[x][y] == "|":
-                    if graph[nx][y] == "|":
-                        count[nx][y] = count[a][b]
-                        stack.append((nx,y))
+                        count[nx][ny] = 0
+                        stack.append((nx,ny))
+                elif graph[nx][ny] == "|":
+                    if graph[nx][ny] == "|":
+                        count[nx][ny] = 0
+                        stack.append((nx,ny))
                     else:
-                        count[x][ny] = count[a][b] + 1
-                        stack.append((x,ny))
+                        count[nx][ny] = 1
+                        stack.append((nx,ny))
                         
                     # if graph[nx][ny] == graph[a][b]:
                     #     visit[nx][ny] = 1
