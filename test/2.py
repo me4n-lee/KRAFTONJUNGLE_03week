@@ -18,7 +18,7 @@ dy = [0, 0, 1, -1]
 
 house = []
 
-def dfs():
+def dfs(graph, visit):
 
     stack = []
     # visit[a][b] == 1
@@ -29,7 +29,7 @@ def dfs():
         for j in range(n):
             if graph[i][j] == 1 and visit[i][j] == 0:
                 value += 1  # 대륙을 발견할 때마다 value를 증가시킵니다.
-                house_count = 1
+                house_count = 0
                 stack.append((i, j))
                 visit[i][j] = 1
 
@@ -48,10 +48,13 @@ def dfs():
                                 stack.append((nx,ny))
 
                 house.append(house_count)
+                # print(house)
 
     return value
 
-print(dfs())
+
+
+print(dfs(graph, visit))
 house.sort()
 for i in range(len(house)):
     print(house[i])
